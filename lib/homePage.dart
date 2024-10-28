@@ -23,7 +23,7 @@ class homePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         title: Text(
           'Movies',
@@ -65,11 +65,13 @@ class homePage extends StatelessWidget {
                 children: [
                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        movie.title,
-                        style: TextStyle(color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.normal),
+                      Flexible(
+                        child: Text(
+                          movie.title,
+                          style: TextStyle(color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.normal),
+                        ),
                       ),
                       Text("Rating: ${movie.imdbRating} / 10",
                         style: TextStyle(color: Colors.grey,
@@ -141,13 +143,51 @@ class movieListDetails extends StatelessWidget {
         ),
         backgroundColor: Colors.grey.shade900,
       ),
-      body: Center(
-        child: Container(
-          child: ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          }, child: Text('Go back: ${this.movie.director}')),
-        ),
-      ),
+      body: ListView(
+        children: [
+          MovieDetailsThumbnail(movie.images[0])
+        ],
+      )
+      // body: Center(
+      //   child: Container(
+      //     child: ElevatedButton(onPressed: () {
+      //       Navigator.pop(context);
+      //     }, child: Text('Go back: ${this.movie.director}')),
+      //   ),
+      // ),
     );
   }
 }
+
+class MovieDetailsThumbnail extends StatelessWidget {
+  // const MovieDetailsThumbnail({super.key});
+  final String thumbnail;
+
+  const MovieDetailsThumbnail(this.thumbnail);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 190,
+              decoration: BoxDecoration(
+                image: DecorationImage(image: NetworkImage(thumbnail), fit: BoxFit.cover)
+              ),
+            ),
+            Icon(Icons.play_circle_outlined, size: 100, color: Colors.white,)
+          ],
+        ),
+
+      ],
+    );
+  }
+}
+
+
+//end of movie app
