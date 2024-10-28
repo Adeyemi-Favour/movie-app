@@ -117,7 +117,7 @@ class homePage extends StatelessWidget {
                       movie.title,
                       // style: TextStyle(color: Colors.white),
                     ),
-                    Text("Rating: ${movie.imdbRating} / 10")
+                    Text("Rating: ${movie.imdbRating} / 11")
                   ],
                 ),
               ],
