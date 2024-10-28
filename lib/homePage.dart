@@ -37,63 +37,12 @@ class homePage extends StatelessWidget {
       body: ListView.builder(
           itemCount: movieList.length,
           itemBuilder: (BuildContext context, int index) {
-            return movieCard(movieList[index], context);
-            // return Card(
-            //   elevation: 1,
-            //   color: Colors.white,
-            //   child: ListTile(
-            //     leading: CircleAvatar(
-            //       backgroundColor: Colors.grey.shade100,
-            //       child: Container(
-            //         width: 200,
-            //         height: 200,
-            //         decoration: BoxDecoration(
-            //           image: DecorationImage(image: NetworkImage(movieList[index].images[0]),
-            //           fit: BoxFit.cover),
-            //           borderRadius: BorderRadius.circular(12),
-            //         ),
-            //         child: null,
-            //       ),
-            //     ),
-            //     trailing: Text('...'),
-            //     title: Text(
-            //       movieList[index].title,
-            //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-            //     ),
-            //     subtitle: Row(
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: [
-            //         // Text(
-            //         //   'Language:',
-            //         //   style: TextStyle(fontSize: 12),
-            //         // ),
-            //         // SizedBox(
-            //         //   width: 5,
-            //         // ),
-            //         // CountryFlag.fromCountryCode(
-            //         //   'us',
-            //         //   width: 15,
-            //         //   height: 15,
-            //         // ),
-            //         // SizedBox(
-            //         //   width: 5,
-            //         // ),
-            //         // Text('English')
-            //         Text("${movieList[0].title}")
-            //       ],
-            //     ),
-            //     onTap: (){
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => movieListDetails(
-            //                     movieName: movieList[index].title,
-            //                 movie: movieList[index],
-            //                   )));
-            //     },
-            //     // onTap: () => debugPrint('Movie name: ${movies.elementAt(index)}'),
-            //   ),
-            // );
+            return Stack(children: [
+              movieCard(movieList[index], context),
+              Positioned(
+                top: 10.0,
+                  child: movieImage(movieList[index].images[0])),
+            ]);
           }),
     );
   }
@@ -101,32 +50,73 @@ class homePage extends StatelessWidget {
   Widget movieCard (Movie movie, BuildContext context){
     return InkWell(
       child: Container(
+        margin: EdgeInsets.only(left: 60),
         width: MediaQuery.of(context).size.width,
         height: 120.0,
         child: Card(
           color: Colors.black45,
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 54.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      movie.title,
-                      // style: TextStyle(color: Colors.white),
-                    ),
-                    Text("Rating: ${movie.imdbRating} / 11")
-                  ],
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        movie.title,
+                        style: TextStyle(color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.normal),
+                      ),
+                      Text("Rating: ${movie.imdbRating} / 10",
+                        style: TextStyle(color: Colors.grey,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal),)
+                    ],
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text("Released: ${movie.released}",
+                        style: mainTextStyle(),
+                      ),
+                      Text(movie.runtime, style: mainTextStyle()),
+                      Text(movie.rated, style:mainTextStyle())
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
       ),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  movieListDetails(movieName: movie.title, movie: movie))),
     );
   }
+}
+
+TextStyle mainTextStyle() => TextStyle(
+      color: Colors.grey,
+      fontSize: 13,
+      fontWeight: FontWeight.normal
+);
+
+Widget movieImage (String imageUrl){
+  return Container(
+    width: 100,
+    height: 100,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      image: DecorationImage(image: NetworkImage(imageUrl ?? 'https://www.its.ac.id/tmesin/fasilitas/laboratorium-2/no-image/'),
+      fit: BoxFit.cover)
+    ),
+  );
 }
 
 // new route or screen
