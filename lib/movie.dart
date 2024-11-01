@@ -83,7 +83,7 @@ class Movie {
             ]),
         Movie(
             "Game of Thrones",
-            "2011–",
+            "2011",
             "TV-MA",
             "17 Apr 2011",
             "56 min",
@@ -91,7 +91,7 @@ class Movie {
             "N/A",
             "David Benioff, D.B. Weiss",
             "Peter Dinklage, Lena Headey, Emilia Clarke, Kit Harington",
-            "While a civil war brews between several noble families in Westeros, the children of the former rulers of the land attempt to rise up to power. Meanwhile a forgotten race, bent on destruction, plans to return after thousands of years in the North.",
+            "While a civil war brews between several noble families in Westeros, the children of the former rulers of the land attempt to rise up to power.",
             "English",
             "USA, UK",
             "Won 1 Golden Globe. Another 185 wins & 334 nominations.",
@@ -111,7 +111,7 @@ class Movie {
             ]),
         Movie(
             "Vikings",
-            "2013–",
+            "2013",
             "TV-14",
             "03 Mar 2013",
             "44 min",
@@ -140,7 +140,7 @@ class Movie {
         ),
         Movie(
             "Gotham",
-            "2014–",
+            "2014",
             "TV-14",
             "01 Aug 2014",
             "42 min",

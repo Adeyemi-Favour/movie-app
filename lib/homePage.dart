@@ -146,7 +146,9 @@ class movieListDetails extends StatelessWidget {
       body: ListView(
         children: [
           MovieDetailsThumbnail(movie.images[0]),
-          MovieDetailsHeaderWithPoster(movie)
+          MovieDetailsHeaderWithPoster(movie),
+          SizedBox(height: 8,),
+          MovieDetailsCast(movie: movie)
         ],
       )
       // body: Center(
@@ -214,7 +216,10 @@ class MovieDetailsHeaderWithPoster extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         children: [
-          MoviePoster(poster: movie.images[0].toString())
+          MoviePoster(poster: movie.images[0].toString()),
+          SizedBox(width: 16,),
+          Expanded(child: MovieDetailsHeader(movie: movie)),
+          // MovieDetailsCast(movie: movie)
         ],
       ),
     );
@@ -235,13 +240,85 @@ class MoviePoster extends StatelessWidget {
     return Card(
       child: ClipRect(
         child: Container(
-          width: MediaQuery.of(context).size.width / 3,
-          height: 200,
+          width: MediaQuery.of(context).size.width / 4,
+          height: 150,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(poster), fit: BoxFit.cover), borderRadius: BorderRadius.circular(10)),
         ),
       ),
+    );
+  }
+}
+
+class MovieDetailsHeader extends StatelessWidget {
+  // const MovieDetailsHeader({super.key});
+
+  final Movie movie;
+
+  MovieDetailsHeader({required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('${movie.year} . ${movie.genre}'.toUpperCase(),
+        style: TextStyle(
+          fontWeight: FontWeight.w400,
+          color: Colors.grey.shade700,
+          fontSize: 12
+        ),),
+        Text(
+          movie.title,
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+        ),
+        Text.rich(TextSpan(style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+        children: [
+          TextSpan(text: movie.plot),
+          TextSpan(text: 'more...', style: TextStyle(color: Colors.blue))
+        ]))
+      ],
+    );
+  }
+}
+
+class MovieDetailsCast extends StatelessWidget {
+  const MovieDetailsCast({super.key, required this.movie});
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MovieField(field: "Cast", value: movie.actors),
+          MovieField(field: "Directors", value: movie.director),
+          MovieField(field: "Awards", value: movie.awards)
+        ],
+      ),
+    );
+  }
+}
+
+class MovieField extends StatelessWidget {
+  const MovieField({super.key, required this.field, required this.value});
+
+  final String field;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("$field : ", style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w300),),
+        Expanded(child: Text(value, style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w300),))
+      ],
     );
   }
 }
